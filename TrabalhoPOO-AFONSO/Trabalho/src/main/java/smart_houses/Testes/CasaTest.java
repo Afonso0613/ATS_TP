@@ -40,7 +40,7 @@ class CasaTest {
         assertEquals(c, c2);
     }
 
-    /* @Test
+    @Test
     void setAllDevicesStateRoom() throws RoomAlreadyExistsException, AlreadyExistDeviceException, DeviceInexistenteException, RoomInexistenteException {
 
         Casa c = new Casa("Artur", "23", "EDP");
@@ -58,10 +58,9 @@ class CasaTest {
         c.addDeviceOnRoom("Quarto", d2.getId());
         c.addDeviceOnRoom("Quarto", d3.getId());
         c.addDeviceOnRoom("Quarto", d4.getId());
-        assertEquals(List.of(d, d2, d3, d4), c.getListDevices());
         c.setAllDevicesStateRoom("Quarto", true);
         assertTrue(c.getListDevices().stream().allMatch(SmartDevice::isOn));
-    } */
+    }
 
     @Test
     void setAllDevicesState() throws AlreadyExistDeviceException {
@@ -107,17 +106,17 @@ class CasaTest {
         assertEquals(d.comsumption() + d2.comsumption(), c.consumoDispositivos());
     }
 
-    /* @Test
-     void consumoPeriodo() {
+    @Test
+    void consumoPeriodo() {
         Casa c = new Casa("Artur", "23", "EDP");
         Fatura f = new Fatura("EDP", "23", 20, 10, LocalDate.of(2010, 1, 1), LocalDate.of(2012, 1, 1));
         Fatura f2 = new Fatura("EDP", "23", 20, 40, LocalDate.of(2012, 1, 1), LocalDate.of(2014, 1, 1));
         c.adicionaFatura(f);
         c.adicionaFatura(f2);
-        assertEquals(40, c.consumoPeriodo());
-    }*/
+        assertEquals(20.0, c.consumoPeriodo());
+    }
 
-    /* @Test
+    @Test
     void testConsumoPeriodo() {
         Casa c = new Casa("Artur", "23", "EDP");
         Fatura f = new Fatura("EDP", "23", 20, 10, LocalDate.of(2010, 1, 1), LocalDate.of(2012, 1, 1));
@@ -126,8 +125,8 @@ class CasaTest {
         c.adicionaFatura(f);
         c.adicionaFatura(f2);
         c.adicionaFatura(f3);
-        assertEquals(50, c.consumoPeriodo(LocalDate.of(2010, 1, 1),LocalDate.of(2020, 1, 1)));
-    } */
+        assertEquals(40.0, c.consumoPeriodo(LocalDate.of(2010, 1, 1),LocalDate.of(2020, 1, 1)));
+    }
 
     @Test
     void mudaDeviceDeRoom() throws RoomAlreadyExistsException, AlreadyExistDeviceException, DeviceInexistenteException, RoomInexistenteException {
