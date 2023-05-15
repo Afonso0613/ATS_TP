@@ -13,6 +13,7 @@ import smart_houses.smart_devices.SmartDevice;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,7 +30,7 @@ class CasaTest {
         c.adicionaFatura(f2);
         c.adicionaFatura(f3);
 
-        assertEquals(List.of(f1, f2, f3), c.getFaturas());
+        assertEquals(Arrays.asList(f1, f2, f3), c.getFaturas());
     }
 
     @Test
@@ -74,7 +75,7 @@ class CasaTest {
         c.addDevice(d2);
         c.addDevice(d3);
         c.addDevice(d4);
-        assertEquals(List.of(d, d2, d3, d4), c.getListDevices());
+        assertEquals(Arrays.asList(d, d2, d3, d4), c.getListDevices());
         c.setAllDevicesState(true);
         assertTrue(c.getListDevices().stream().allMatch(SmartDevice::isOn));
     }
@@ -91,7 +92,7 @@ class CasaTest {
         c.addDevice(d2);
         c.addDevice(d3);
         c.addDevice(d4);
-        assertEquals(List.of(d, d2, d3, d4), c.getListDevices());
+        assertEquals(Arrays.asList(d, d2, d3, d4), c.getListDevices());
         c.setDeviceState(d.getId(), true);
         assertTrue(c.getDevice(d.getId()).isOn());
     }
@@ -162,5 +163,32 @@ class CasaTest {
         assertTrue(c.getRooms().get("Cozinha").contains(sm.getId()));
         assertTrue(c.getRooms().get("Cozinha").contains(sm2.getId()));
 
+    }
+
+    //Adicionados pós Pit
+    @Test
+    void checkRooms() throws RoomAlreadyExistsException {
+        Casa c = new Casa();
+        c.addRoom("Quarto");
+        c.addRoom("Sala");
+        assertSame(2, c.getRooms().size());
+    }
+
+    @Test
+    void checkDevices() throws DeviceInexistenteException, RoomInexistenteException, AlreadyExistDeviceException, RoomAlreadyExistsException {
+        Casa c = new Casa();
+        SmartDevice sm = new SmartBulb();
+        SmartDevice sm2 = new SmartBulb();
+        c.addRoom("Quarto");
+        c.addRoom("Sala");
+        c.addDevice(sm2);
+        c.addDevice(sm);
+        assertSame(2, c.getMapDevices().size());
+    }
+
+    @Test
+    void checkEquals() {
+        Casa c = new Casa("Artur", "23", "EDP");
+        assertTrue(c.equals(new Casa("Artur", "23", "EDP")));
     }
 }

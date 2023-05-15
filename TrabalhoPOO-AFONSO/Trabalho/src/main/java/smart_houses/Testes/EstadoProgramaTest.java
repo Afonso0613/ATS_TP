@@ -15,6 +15,7 @@ import smart_houses.smart_devices.SmartDevice;
 import smart_houses.smart_devices.SmartSpeaker;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -66,7 +67,7 @@ class EstadoProgramaTest {
         e.adicionaCasa(c);
         e.adicionaCasa(c2);
         e.adicionaCasa(c3);
-        assertEquals(List.of(c, c2), e.maiorConsumidorPeriodo(LocalDate.of(2020, 1, 1), LocalDate.of(2021, 1, 1), 2));
+        assertEquals(Arrays.asList(c, c2), e.maiorConsumidorPeriodo(LocalDate.of(2020, 1, 1), LocalDate.of(2021, 1, 1), 2));
     }
 
     @Test
@@ -113,7 +114,7 @@ class EstadoProgramaTest {
         e.adicionaCasa(c1);
         e.adicionaCasa(c2);
         e.adicionaCasa(c3);
-        assertEquals(List.of("SmartBulb", "SmartCamera", "SmartSpeaker"), e.podiumDeviceMaisUsado());
+        assertEquals(Arrays.asList("SmartBulb", "SmartCamera", "SmartSpeaker"), e.podiumDeviceMaisUsado());
 
     }
 }

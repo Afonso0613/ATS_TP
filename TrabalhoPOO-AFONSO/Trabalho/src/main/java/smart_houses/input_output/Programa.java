@@ -328,7 +328,7 @@ public class Programa {
      * Metodo que lida com a parte de gestao de dispositivos do menu
      */
     public void gestaoDispositivos(){
-        Menu menuDispositivos = new Menu(List.of("MENU GESTÃO DISPOSITIVOS", "1. Criar Dispositivo", "2. Ligar/Desligar Dispositivo", "3. Editar Dispositivo", "4. Remover dispositivo da Casa", "0. Sair"));
+        Menu menuDispositivos = new Menu(Arrays.asList("MENU GESTÃO DISPOSITIVOS", "1. Criar Dispositivo", "2. Ligar/Desligar Dispositivo", "3. Editar Dispositivo", "4. Remover dispositivo da Casa", "0. Sair"));
         do{
             menuDispositivos.run();
             switch (menuDispositivos.getOpcao()) {
@@ -431,7 +431,7 @@ public class Programa {
      * Metodo que lida com processos de edicao de estados das casas
      */
     public void edicaoCasas(){
-        Menu menu = new Menu(List.of("MENU EDICÃO CASA: ", "1. Adicionar divisões", "2. Adicionar/Mudar device de divisão", "3. Remover divisão", "4. Juntar duas divisões", "0. Sair"));
+        Menu menu = new Menu(Arrays.asList("MENU EDICÃO CASA: ", "1. Adicionar divisões", "2. Adicionar/Mudar device de divisão", "3. Remover divisão", "4. Juntar duas divisões", "0. Sair"));
         do{
             menu.run();
             switch (menu.getOpcao()) {
@@ -542,7 +542,7 @@ public class Programa {
      * Metodo que lida com a parte de gestao de casas do menu
      */
     public void gestaoCasas(){
-        Menu menu = new Menu(List.of("MENU GESTÃO CASAS:", "1. Criar Casa", "2. Mudar Fornecedor Casa", "3. Remover Casa", "4. Listar Casas", "5. Listar NIFs inscritos no programa", "6. Visualizar o conteúdo de uma casa", "7. Ver Faturas de uma Casa", "8. Editar Casa", "0. Voltar"));
+        Menu menu = new Menu(Arrays.asList("MENU GESTÃO CASAS:", "1. Criar Casa", "2. Mudar Fornecedor Casa", "3. Remover Casa", "4. Listar Casas", "5. Listar NIFs inscritos no programa", "6. Visualizar o conteúdo de uma casa", "7. Ver Faturas de uma Casa", "8. Editar Casa", "0. Voltar"));
 
         do{
             menu.run();
@@ -633,7 +633,7 @@ public class Programa {
      * Metodo que lida com a parte do menu relativa a fazer avancos na data do programa
      */
     public void gestaoData(){
-        Menu data = new Menu(List.of("AVANCAR DATA: ", "1. Avancar 1 dia", "2. Avancar x dias", "3. Avancar para uma data", "0. Voltar"));
+        Menu data = new Menu(Arrays.asList("AVANCAR DATA: ", "1. Avancar 1 dia", "2. Avancar x dias", "3. Avancar para uma data", "0. Voltar"));
         LocalDate date = null;
         data.run();
         switch (data.getOpcao()) {
@@ -665,16 +665,23 @@ public class Programa {
     /**
      * Metodo que lida com a parte de estatisticas do programa
      */
-    public void estatisticasPrograma(){
-        Menu menu = new Menu(List.of("Menu Estatisticas:", "1. Casa que mais consumiu até agora", "2. Comercializador com maior Faturação", "3. Maior Consumidor de um Periodo", "4. Top de tipo de Dispositivo mais utilizado", "0. Voltar"));
-        do{
+    public void estatisticasPrograma() {
+        Menu menu = new Menu(Arrays.asList("Menu Estatisticas:", "1. Casa que mais consumiu até agora", "2. Comercializador com maior Faturação", "3. Maior Consumidor de um Periodo", "4. Top de tipo de Dispositivo mais utilizado", "0. Voltar"));
+        do {
             menu.run();
-            switch (menu.getOpcao()) {
-                case 1 -> this.log.getCasaMaisGastadora().ifPresentOrElse(
-                        c -> System.out.println("A casa que mais gastou até agora foi a casa de nif " + c.getNif() + " e nome: " + c.getNome() + " com consumo: " + c.consumoTotal()),
-                        () -> System.out.println("Nao existe nenhuma casa ainda")
-                );
-                case 2 -> {
+            int opcao = menu.getOpcao();
+            switch (opcao) {
+                case 1:
+                    Optional<Casa> casaMaisGastadora = this.log.getCasaMaisGastadora();
+                    if (casaMaisGastadora.isPresent()) {
+                        Casa c = casaMaisGastadora.get();
+                        System.out.println("A casa que mais gastou até agora foi a casa de nif " + c.getNif() + " e nome: " + c.getNome() + " com consumo: " + c.consumoTotal());
+                    } else {
+                        System.out.println("Nao existe nenhuma casa ainda");
+                    }
+                    break;
+
+                case 2:
                     Fornecedor f = null;
                     try {
                         f = this.log.getFornecedorMaiorFaturacao();
@@ -682,14 +689,14 @@ public class Programa {
                     } catch (FornecedorInexistenteException e) {
                         System.out.println(e.getMessage());
                     }
-                }
-                case 3 -> {
+                    break;
+                case 3:
                     System.out.println("Insira o numero de casas que quer recolher informação");
                     int N = this.scan.nextInt();
                     this.scan.nextLine();
                     System.out.println("Pretende inserir um periodo S/N? (Caso não queira irá ser usado o ultimo avanço do programa");
-                    String opcao = this.scan.nextLine();
-                    if(opcao.equals("S")) {
+                    String opcaoS = this.scan.nextLine();
+                    if (opcaoS.equals("S")) {
                         System.out.println("Insira a data inicial do periodo AAAA-MM-DD");
                         LocalDate dataInicial = LocalDate.parse(this.scan.nextLine());
                         System.out.println("Insira a data final do periodo AAAA-MM-DD");
@@ -697,14 +704,13 @@ public class Programa {
                         List<Casa> casas = this.log.maiorConsumidorPeriodo(dataInicial, dataFinal, N);
                         System.out.println("Top + " + "casas: ");
                         casas.forEach(c -> System.out.println("Nif: " + c.getNif() + " Nome: " + c.getNome() + " Consumo: " + c.consumoPeriodo(dataInicial, dataFinal) + " kW"));
-                    }
-                    else {
+                    } else {
                         List<Casa> casas = this.log.maiorConsumidorPeriodo(N);
                         System.out.println("Top " + N + " de Casas: ");
-                        casas.forEach(casa-> System.out.println("Casa-> nif: " + casa.getNif() + " nome: " + casa.getNome() + " consumo: " +casa.consumoPeriodo()));
+                        casas.forEach(casa -> System.out.println("Casa-> nif: " + casa.getNif() + " nome: " + casa.getNome() + " consumo: " + casa.consumoPeriodo()));
                     }
-                }
-                case 4 -> {
+                    break;
+                case 4:
                     System.out.println("Top tipo dispositivos:");
                     Iterator<String> top = this.log.podiumDeviceMaisUsado().iterator();
                     int i = 1;
@@ -713,16 +719,16 @@ public class Programa {
                         System.out.println(i + "º- " + d);
                         ++i;
                     }
-                }
+                    break;
             }
-        }while(menu.getOpcao() != 0);
+        } while (menu.getOpcao() != 0);
     }
 
     /**
      * Metodo que lida com a parte de gestao do programa
      */
     public void gestaoPrograma(){
-        Menu menuP = new Menu(List.of("MENU ESTADO PROGRAMA", "1. Apresentar estado", "2. Apresentar Estatísticas", "3. Avancar data", "0. Voltar"));
+        Menu menuP = new Menu(Arrays.asList("MENU ESTADO PROGRAMA", "1. Apresentar estado", "2. Apresentar Estatísticas", "3. Avancar data", "0. Voltar"));
         do{
             menuP.run();
             switch (menuP.getOpcao()) {
@@ -737,7 +743,7 @@ public class Programa {
      * Metodo que lida com a parte do menu de gestao de fornecedores
      */
     public void gestaoFornecedor(){
-        Menu menuF = new Menu(List.of("MENU GESTAO FORNECEDORES", "1: Criar Fornecedores","2. Faturas de um fornecedor", "3. Lista de Fornecedores", "4. Visualizar dados Fornecedor", "5. Mudar valor desconto Fornecedor", "0. Voltar"));
+        Menu menuF = new Menu(Arrays.asList("MENU GESTAO FORNECEDORES", "1: Criar Fornecedores","2. Faturas de um fornecedor", "3. Lista de Fornecedores", "4. Visualizar dados Fornecedor", "5. Mudar valor desconto Fornecedor", "0. Voltar"));
         do{
             menuF.run();
             switch (menuF.getOpcao()) {
@@ -803,7 +809,7 @@ public class Programa {
      * Metodo que faz o run do programa
      */
     public void run(){
-        Menu menuPrincipal = new Menu(List.of("MENU PRINCIPAL", "1. Gerir Casas", "2. Gerir Dispositivos", "3. Gerir Fornecedores", "4. Estado Programa", "0. Sair"));
+        Menu menuPrincipal = new Menu(Arrays.asList("MENU PRINCIPAL", "1. Gerir Casas", "2. Gerir Dispositivos", "3. Gerir Fornecedores", "4. Estado Programa", "0. Sair"));
         do{
             menuPrincipal.run();
             switch (menuPrincipal.getOpcao()) {
