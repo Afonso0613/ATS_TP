@@ -86,4 +86,4 @@ generateFile filePath numLines = do
     hPutStr handle $ unlines $ map formatRegistro registros
 
 main :: IO ()
-main = generateFile "arquivo.txt" 50
+main = generateFile "Logs/LogsHS.txt" 50
