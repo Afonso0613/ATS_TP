@@ -402,7 +402,7 @@ public class Casa implements Serializable {
      * @param device device que se pretende procurar
      * @return divisão onde se encontra o dispositivo
      */
-    private String divisaoDeDispositivo (int device){
+    public String divisaoDeDispositivo (int device){
         String room = null;
         Iterator<Map.Entry<String, Set<Integer>>> iter = this.rooms.entrySet().iterator();
 

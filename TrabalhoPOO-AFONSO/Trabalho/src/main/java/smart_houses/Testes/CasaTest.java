@@ -2,18 +2,15 @@ package smart_houses.Testes;
 
 import org.junit.jupiter.api.Test;
 import smart_houses.Fatura;
-import smart_houses.exceptions.AlreadyExistDeviceException;
-import smart_houses.exceptions.DeviceInexistenteException;
-import smart_houses.exceptions.RoomAlreadyExistsException;
-import smart_houses.exceptions.RoomInexistenteException;
+import smart_houses.exceptions.*;
 import smart_houses.modulo_casas.Casa;
 import smart_houses.smart_devices.SmartBulb;
 import smart_houses.smart_devices.SmartCamera;
 import smart_houses.smart_devices.SmartDevice;
+import smart_houses.smart_devices.SmartSpeaker;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Arrays;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -191,4 +188,174 @@ class CasaTest {
         Casa c = new Casa("Artur", "23", "EDP");
         assertTrue(c.equals(new Casa("Artur", "23", "EDP")));
     }
+
+    @Test
+    void setFornecedorTest() {
+        Casa c = new Casa("Artur", "23", "EDP");
+        String newFornecedor = "EDP";
+        c.setFornecedor(newFornecedor);
+        assert c.getFornecedor().equals(newFornecedor);
+    }
+
+    @Test
+    void addDeviceTest() throws AlreadyExistDeviceException {
+        Casa c = new Casa("Artur", "123", "EDP");
+        SmartDevice d2 = new SmartBulb(true, 0.20, SmartBulb.Tones.NEUTRAL, 20);
+        c.addDevice(d2);
+        assert c.getMapDevices().containsKey(d2.getId());
+
+    }
+
+    @Test
+    void removeDeviceTest() throws AlreadyExistDeviceException, DeviceInexistenteException {
+        Casa c = new Casa("Artur", "123", "EDP");
+        SmartDevice d2 = new SmartBulb(true, 0.20, SmartBulb.Tones.NEUTRAL, 20);
+        c.addDevice(d2);
+        c.removeDevice(d2.getId());
+        assert !c.getMapDevices().containsKey(d2.getId());
+    }
+    @Test
+    void addRoomTest() throws RoomAlreadyExistsException {
+        Casa c = new Casa("Artur", "123", "EDP");
+        String room = "Sala";
+        c.addRoom(room);
+        assert c.getRooms().containsKey(room);
+    }
+    @Test
+    void removeRoomTest() throws RoomAlreadyExistsException {
+        Casa c = new Casa("Artur", "123", "EDP");
+        String room = "Sala";
+        c.addRoom(room);
+        c.removeRoom(room);
+        assert !c.getRooms().containsKey(room);
+
+    }
+    @Test
+    void getFaturasTest(){
+        Casa c = new Casa("Artur", "123", "EDP");
+        List<Fatura> faturas = c.getFaturas();
+        assert faturas != null;
+    }
+    @Test
+    void getFornecedorTest(){
+        Casa c = new Casa("Artur", "123", "EDP");
+        String fornecedor = c.getFornecedor();
+        assert fornecedor.equals("EDP");
+    }
+    @Test
+    void getNomeTest(){
+        Casa c = new Casa("Artur", "123", "EDP");
+        String nome = c.getNome();
+        assert nome.equals("Artur");
+    }
+    @Test
+    void equalsTest(){
+        Casa c = new Casa("Artur", "123", "EDP");
+        Casa c1 = new Casa("Artur", "123", "EDP");
+        assert c.equals(c1);
+    }
+    @Test
+    void toStringTest(){
+        Casa c = new Casa("Artur", "123", "EDP");
+        String casaString = c.toString();
+        assert casaString != null;
+    }
+    @Test
+    void getMapDevicesTest(){
+        Casa c = new Casa("Artur", "123", "EDP");
+        Map<Integer, SmartDevice> devices = c.getMapDevices();
+        assert devices != null;
+    }
+    @Test
+    void getListDevicesTest(){
+        Casa c = new Casa("Artur", "123", "EDP");
+        List<SmartDevice> devices = c.getListDevices();
+        assert devices != null;
+    }
+    @Test
+    void getListRoomsTest(){
+        Casa c = new Casa("Artur", "123", "EDP");
+        List<String> rooms = c.getListRooms();
+        assert rooms != null;
+    }
+    @Test
+    void setDevicesTest(){
+        Casa c = new Casa("Artur", "123", "EDP");
+        Map<Integer, SmartDevice> devices = new HashMap<>();
+        devices.put(1, new SmartBulb(true, 0.20, SmartBulb.Tones.NEUTRAL, 20));
+        devices.put(2, new SmartSpeaker(true, 0.20, 70, "RFM", "Sony"));
+        c.setDevices(devices);
+        assert c.getMapDevices().equals(devices);
+    }
+    @Test
+    void getRoomsTest(){
+        Casa c = new Casa("Artur", "123", "EDP");
+        Map<String, Set<Integer>> rooms = c.getRooms();
+        assert rooms != null;
+    }
+    @Test
+    void addDeviceOnRoomTest() throws RoomAlreadyExistsException, DeviceInexistenteException, RoomInexistenteException, AlreadyExistDeviceException {
+        Casa c = new Casa("Artur", "123", "EDP");
+        String room ="Sala";
+        c.addRoom(room);
+        SmartDevice d2 = new SmartBulb();
+        c.addDevice(d2);
+        c.addDeviceOnRoom(room, d2.getId());
+        Set<Integer> tmp = new HashSet<>();
+        tmp= c.getRooms().get("Sala");
+        System.out.println(tmp.toString());
+        assertSame(1, c.getRooms().values().size());
+        assertTrue(tmp.contains(d2.getId()));
+    }
+    @Test
+    void removeDeviceOnRoomTest() throws RoomAlreadyExistsException, AlreadyExistDeviceException, DeviceInexistenteException, RoomInexistenteException {
+        Casa c = new Casa("Artur", "123", "EDP");
+        String room ="Sala";
+        c.addRoom(room);
+        SmartDevice d2 = new SmartBulb();
+        c.addDevice(d2);
+        c.addDeviceOnRoom(room, d2.getId());
+        Set<Integer> tmp = new HashSet<>();
+        tmp= c.getRooms().get("Sala");
+        System.out.println(tmp.toString());
+        assertTrue(tmp.contains(d2.getId()));
+        c.removeDeviceOnRoom(d2.getId());
+        assertTrue(c.getRooms().get("Sala").isEmpty());
+    }
+    @Test
+    void divisaoDeDispositivoTest() throws RoomAlreadyExistsException, AlreadyExistDeviceException, DeviceInexistenteException, RoomInexistenteException {
+        Casa c = new Casa("Artur", "123", "EDP");
+        String room ="Sala";
+        c.addRoom(room);
+        SmartDevice d2 = new SmartBulb();
+        c.addDevice(d2);
+        c.addDeviceOnRoom(room, d2.getId());
+        assertSame("Sala", c.divisaoDeDispositivo(d2.getId()));
+    }
+    @Test
+    void alteraInfoBulbTest() throws AlreadyExistDeviceException, DeviceInexistenteException, TipoDeviceErradoException {
+        Casa c = new Casa("Artur", "123", "EDP");
+        SmartDevice d= new SmartBulb(true, 0.20, SmartBulb.Tones.NEUTRAL, 20);
+        c.addDevice(d);
+        c.alteraInfoBulb(d.getId(), device->device.setConsume(0.40));
+        assertEquals(0.40, c.getDevice(d.getId()).getConsume(), 0.5);
+    }
+    @Test
+    void alteraInfoCameraTest() throws AlreadyExistDeviceException, DeviceInexistenteException, TipoDeviceErradoException {
+        Casa c = new Casa("Artur", "123", "EDP");
+        SmartDevice d= new SmartCamera(true, 0.20, 70, 70, 500);
+        c.addDevice(d);
+        c.alteraInfoCamera(d.getId(), device-> device.setConsume(0.40));
+        assertEquals(0.40, c.getDevice(d.getId()).getConsume(), 0.5);
+    }
+    @Test
+    void alteraInfoSpeakerTest() throws RoomAlreadyExistsException, AlreadyExistDeviceException, DeviceInexistenteException, TipoDeviceErradoException {
+        Casa c = new Casa("Artur", "123", "EDP");
+        SmartDevice d= new SmartSpeaker(true, 0.20, 70, "RFM", "Sony");
+        c.addDevice(d);
+        c.alteraInfoSpeaker(d.getId(), device-> device.setConsume(0.40));
+        assertEquals(0.40, c.getDevice(d.getId()).getConsume(), 0.5);
+    }
+
+
 }

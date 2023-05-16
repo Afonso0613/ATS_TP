@@ -1,8 +1,10 @@
 package smart_houses.Testes;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import smart_houses.EstadoPrograma;
 import smart_houses.Fatura;
+import smart_houses.SerializableConsumer;
 import smart_houses.exceptions.AlreadyExistDeviceException;
 import smart_houses.exceptions.ExisteCasaException;
 import smart_houses.exceptions.ExisteFornecedorException;
@@ -21,7 +23,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class EstadoProgramaTest {
-
     @Test
     void getCasaMaisGastadora() throws FornecedorInexistenteException, ExisteCasaException, ExisteFornecedorException {
         Fornecedor f1 = new Fornecedor("EDP");
@@ -116,5 +117,21 @@ class EstadoProgramaTest {
         e.adicionaCasa(c3);
         assertEquals(Arrays.asList("SmartBulb", "SmartCamera", "SmartSpeaker"), e.podiumDeviceMaisUsado());
 
+    }
+    @Test
+    void EstadoProgramaTest(){
+        EstadoPrograma p= new EstadoPrograma();
+        assertEquals(0, p.getPedidos().size());
+        assertEquals(0,p.getCasas().size());
+        assertEquals(0,p.getFornecedores().size());
+    }
+    @Test
+    void EstadoProgramaTest2() throws FornecedorInexistenteException, ExisteCasaException, ExisteFornecedorException {
+        EstadoPrograma p1= new EstadoPrograma();
+        Casa c = new Casa("Artur", "123", "EDP");
+        Fornecedor f= new Fornecedor("EDP");
+        p1.adicionaCasa(c);
+        p1.addFornecedor(f);
+        EstadoPrograma p2= new EstadoPrograma(p1);
     }
 }
