@@ -151,7 +151,7 @@ def registro_strategy(draw):
 
 def generate_file(registros):
     file_content = "\n".join(registros)
-    with open("Logs/Logs.txt", "w") as f:
+    with open("Logs/LogsPY.txt", "w") as f:
         f.write(file_content)
 
 generate_file()
