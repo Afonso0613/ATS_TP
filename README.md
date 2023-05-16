@@ -11,7 +11,7 @@ Segue-se uma pequena descrição do conteúdo de cada pasta do presente trabalho
 
 ## How to Run
 
-Aconselha-se a correr ambas as soluções do projeto SmartHouse com recurso ao IntelIJ. Basta apenas utilizar a ferramente Build para compilar o projeto e utilizar o botão "Run" para utilizar a aplicação.
+Aconselha-se a correr ambas as soluções do projeto SmartHouse com recurso ao IntelIJ. Basta apenas utilizar a ferramenta Build para compilar o projeto e utilizar o botão "Run" para utilizar a aplicação.
 
 ### Ficheiros onde se tem de realizar o Build:
 
