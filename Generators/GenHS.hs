@@ -1,6 +1,9 @@
 import Test.QuickCheck
 import System.IO
 
+roundTo :: Int -> Double -> Double
+roundTo n x = fromInteger (round $ x * (10^n)) / (10.0^^n)
+
 gerarNumeroUnico :: Gen Int
 gerarNumeroUnico = choose (100000000, 999999999)
 
@@ -69,9 +72,9 @@ formatRegistro (Fornecedor fornecedor) = "Fornecedor:" ++ show fornecedor
 formatRegistro (CasaRegisto (Casa nome num fornecedor)) = "Casa:" ++ show nome ++ "," ++ show num ++ "," ++ show fornecedor
 formatRegistro (DivisaoRegisto divisao) = "Divisao:" ++ show divisao
 formatRegistro (SmartDevice device) = case device of
-  SmartBulb t i d -> "SmartBulb:" ++ show t ++ "," ++ show i ++ "," ++ show d
-  SmartCamera a b i d -> "SmartCamera:" ++ show a ++ "x" ++ show b ++ "," ++ show i ++ "," ++ show d
-  SmartSpeaker i s b d -> "SmartSpeaker:" ++ show i ++ "," ++ show s ++ "," ++ show b ++ "," ++ show d
+  SmartBulb t i d -> "SmartBulb:" ++ show t ++ "," ++ show i ++ "," ++ show (roundTo 2 d)
+  SmartCamera a b i d -> "SmartCamera:" ++ "(" ++ show a ++ "x" ++ show b ++ ")" ++ "," ++ show i ++ "," ++ show (roundTo 2 d)
+  SmartSpeaker i s b d -> "SmartSpeaker:" ++ show i ++ "," ++ show s ++ "," ++ show b ++ "," ++ show (roundTo 2 d)
 
 generateRegistro :: IO Registro
 generateRegistro = generate arbitrary
@@ -83,4 +86,4 @@ generateFile filePath numLines = do
     hPutStr handle $ unlines $ map formatRegistro registros
 
 main :: IO ()
-main = generateFile "Logs/LogsHS.txt.txt" 50
+main = generateFile "arquivo.txt" 50
