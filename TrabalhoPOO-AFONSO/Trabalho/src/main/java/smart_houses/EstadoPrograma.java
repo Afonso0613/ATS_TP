@@ -482,4 +482,8 @@ public class EstadoPrograma implements Serializable {
 
         mapperCasa.accept(this.casas.get(nif));
     }
+
+    public void setData(LocalDate currentDate) {
+        this.data_atual=currentDate;
+    }
 }
