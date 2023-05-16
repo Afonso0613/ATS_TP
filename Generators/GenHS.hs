@@ -1,10 +1,14 @@
-{-# LANGUAGE OverloadedStrings #-}
-
 import Test.QuickCheck
 import System.IO
 
 gerarNumeroUnico :: Gen Int
 gerarNumeroUnico = choose (100000000, 999999999)
+
+gerarNumero :: (Int, Int) -> Gen Int
+gerarNumero (x,y)= choose (x,y)
+
+gerarDouble :: (Double, Double) -> Gen Double
+gerarDouble (x,y)= choose (x,y)
 
 data Fornecedor = EDP | Galp | Iberdrola | Endesa | GoldEnergy | Coopernico | Enat | YIce | MEOEnergia | Muon | Luzboa | EnergiaSimples | SUElectricidade | EDA
   deriving (Show, Eq)
@@ -55,7 +59,7 @@ instance Arbitrary Marca where
   arbitrary = elements [Sony, Marshall, JBL, Sennheiser, BowersWilkins, Philips]
 
 instance Arbitrary SmartDevice where
-  arbitrary = oneof [SmartBulb <$> arbitrary <*> arbitrary <*> arbitrary, SmartCamera <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary, SmartSpeaker <$> arbitrary <*> arbitrary <*> arbitrary <*> arbitrary]
+  arbitrary = oneof [SmartBulb <$> arbitrary <*> gerarNumero (0,100) <*> gerarDouble (0.0,10.0), SmartCamera <$> gerarNumero (1024,3840) <*> gerarNumero (768,2160) <*> gerarNumero (0,100) <*> gerarDouble(0.0,10.0), SmartSpeaker <$> gerarNumero (0,100) <*> arbitrary <*> arbitrary <*> gerarDouble(0.0,10)]
 
 instance Arbitrary Registro where
   arbitrary = oneof [Fornecedor <$> arbitrary, CasaRegisto <$> arbitrary, DivisaoRegisto <$> arbitrary, SmartDevice <$> arbitrary]
@@ -79,4 +83,4 @@ generateFile filePath numLines = do
     hPutStr handle $ unlines $ map formatRegistro registros
 
 main :: IO ()
-main = generateFile "arquivo.txt" 20
+main = generateFile "Logs/LogsHS.txt.txt" 50
