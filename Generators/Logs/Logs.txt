@@ -1,0 +1,100 @@
+Divisao:Cozinha
+SmartBulb:Vermelho,15,6.037
+SmartBulb:Laranja,0,1.9
+SmartBulb:Amarelo,7,1.0
+SmartBulb:Verde,5,1.1
+Casa:Artur,827021268,Iberdrola
+Divisao:Cave
+Fornecedor:Muon
+SmartSpeaker:1,MEGAHITS,Bowers&Wilkins,0.0
+Fornecedor:MEO Energia
+Casa:Afonso,100000193,MEO Energia
+SmartCamera:(1366x768),21,1.1
+Casa:Afonso,100000006,Enat
+Casa:Rui,100000003,Galp Energia
+SmartCamera:(3840x2160),25,1.1
+Casa:Afonso,100000179,SU Electricidade
+SmartSpeaker:25,Noticias,Sony,0.0
+Divisao:Quarto
+SmartSpeaker:6,Renascenca,Sony,1.0
+Casa:Rui,100000055,Iberdrola
+Casa:Artur,100000007,MEO Energia
+SmartCamera:(1366x768),53,1.0
+Divisao:Sala de Jantar
+SmartBulb:Verde,13,1.0
+Casa:Rui,100000210,EDA
+Casa:Bea,598481183,Coopernico
+SmartBulb:Verde,1,2.0
+Casa:Gongas,100041345,Luzboa
+SmartCamera:(2160x1440),57,7.877
+Fornecedor:SU Electricidade
+SmartBulb:Amarelo,1,10.0
+Casa:Afonso,100000000,EDP Comercial
+Fornecedor:Galp Energia
+Fornecedor:Iberdrola
+Casa:Rui,100004616,Galp Energia
+Casa:Diana,100000000,Galp Energia
+Fornecedor:Enat
+Casa:Diana,100000000,EDP Comercial
+Casa:Diana,116844548,Galp Energia
+Casa:Diana,100000257,EDP Comercial
+Casa:Rui,100065536,Coopernico
+SmartCamera:(1024x768),23,1.141
+Fornecedor:EDP Comercial
+Casa:Rui,100000257,Galp Energia
+Casa:Afonso,100000128,Coopernico
+Casa:Rui,100000000,EDP Comercial
+Casa:Diana,100001027,Iberdrola
+Casa:Gongas,100000769,EDP Comercial
+SmartCamera:(1366x768),21,1.26
+SmartSpeaker:0,Comercial,Marshall,1.1
+Divisao:Sotão
+Casa:Gongas,100000514,Iberdrola
+Casa:Rui,100000007,Enat
+SmartBulb:Amarelo,1,1.5
+Casa:Artur,100000000,Galp Energia
+Casa:Artur,100000010,SU Electricidade
+Fornecedor:YIce
+SmartSpeaker:18,MEGAHITS,Philips,0.0
+SmartCamera:(2160x1440),157,0.0
+SmartCamera:(1920x1080),24,1.5
+Casa:Rui,100062808,EDP Comercial
+SmartBulb:Roxo,6,2.0
+SmartSpeaker:33,Renascenca,Sony,2.762
+Fornecedor:Energia Simples
+Fornecedor:Endesa
+Casa:Rui,167109123,Galp Energia
+Casa:Rui,100000000,Galp Energia
+Casa:Diana,100002049,EDP Comercial
+SmartBulb:Amarelo,2,1.5
+Casa:Rui,100000001,Gold Energy
+Casa:Rui,100066053,Iberdrola
+Casa:Rui,116777217,Gold Energy
+Casa:Rui,100000006,Galp Energia
+Casa:Diana,100000001,Gold Energy
+Casa:Bea,100000000,EDP Comercial
+Casa:Rui,100000001,Galp Energia
+Casa:Rui,116777473,YIce
+Casa:Rui,117039361,EDP Comercial
+SmartSpeaker:1,RFM,Marshall,1.0
+Casa:Artur,100000000,EDP Comercial
+Casa:Diana,100000001,Iberdrola
+Casa:Diana,100065536,EDP Comercial
+Casa:Rui,100000512,Endesa
+Casa:Bea,100419334,Galp Energia
+Casa:Diana,184082958,Galp Energia
+Casa:Rui,184017153,EDP Comercial
+Casa:Diana,267838977,Endesa
+Casa:Gongas,101368629,Endesa
+Casa:Rui,100000512,Iberdrola
+Casa:Gongas,100000001,EDP Comercial
+Casa:Diana,100002561,Galp Energia
+Fornecedor:Gold Energy
+Casa:Artur,200990980,Gold Energy
+Casa:Diana,251257417,EDP Comercial
+Divisao:Sala
+Casa:Diana,100000010,YIce
+Casa:Afonso,100000004,Galp Energia
+Fornecedor:Coopernico
+SmartBulb:Vermelho,2,2.0
+Casa:Diana,100001799,EDP Comercial
