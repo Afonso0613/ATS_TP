@@ -86,19 +86,15 @@ def name_strategy(draw):
     return draw(st.sampled_from(nomes))
 
 @st.composite
-def nif_strategy(draw):
-    return draw(st.sampled_from(nif))
-
-@st.composite
 def room_strategy(draw):
     return draw(st.sampled_from(rooms))
 
 @st.composite
 def casa_strategy(draw):
     nome = draw(name_strategy())
-    num = draw(st.integers(min_value=100000000, max_value=999999999))
+    nif = draw(st.integers(min_value=100000000, max_value=999999999))
     fornecedor = draw(fornecedor_strategy())
-    return f"Casa:{nome},{num},{fornecedor}"
+    return f"Casa:{nome},{nif},{fornecedor}"
 
 @st.composite
 def divisao_strategy(draw):
